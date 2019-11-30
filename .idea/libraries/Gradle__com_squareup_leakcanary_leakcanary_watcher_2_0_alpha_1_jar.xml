@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.squareup.leakcanary:leakcanary-watcher:2.0-alpha-1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-watcher/2.0-alpha-1/d2d4fe2a0b7a6a329d87741775d2eadc40a2dbeb/leakcanary-watcher-2.0-alpha-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-watcher/2.0-alpha-1/2f7e40b438fb355c8c64d4dae03fc627224eea4e/leakcanary-watcher-2.0-alpha-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.leakcanary/leakcanary-watcher/2.0-alpha-1/1ba25e6d40a06aec9f4bc19ffc2974be9da57894/leakcanary-watcher-2.0-alpha-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
