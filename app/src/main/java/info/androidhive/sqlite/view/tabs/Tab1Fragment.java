@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -24,7 +25,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -38,6 +38,7 @@ import info.androidhive.sqlite.R;
 import info.androidhive.sqlite.bluetooth.AndruinoActivity;
 import info.androidhive.sqlite.database.DatabaseHelper;
 import info.androidhive.sqlite.database.model.Note;
+import info.androidhive.sqlite.utils.MyDividerItemDecoration;
 import info.androidhive.sqlite.utils.RecyclerTouchListener;
 import info.androidhive.sqlite.view.NotesAdapter;
 
@@ -53,18 +54,19 @@ public class Tab1Fragment extends Fragment implements DatePickerDialog.OnDateSet
 
     private Button btnTEST;
     private NotesAdapter mAdapter;
+
     private List<Note> notesList = new ArrayList<>();
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private TextView noNotesView;
     private Context appContext = null;
-    private DatabaseHelper db;
+    public static DatabaseHelper db;
     public static String EXTRA_DEVICE_ADDRESS = "device_addres";
     int day , month, year, hour, minute;
     int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
     String dias_semana;
 String send_resp;
-    String seg_v = "2", ter_v  ="3", qua_v  = "4", qui_v  = "5", sex_v  ="6", sab_v  = "7", dom_v  ="1";
+    public static final String seg_v = "2", ter_v  ="3", qua_v  = "4", qui_v  = "5", sex_v  ="6", sab_v  = "7", dom_v  ="1";
     Dialog mDialog;
     TextView inputTextTimer;
     ToggleButton seg , ter, qua, qui, sex, sab, dom;
@@ -76,6 +78,53 @@ String send_resp;
         View view = inflater.inflate(R.layout.tab1_fragment,container,false);
         //Se a RecyclerView estiver dentro do layout do fragment, pegue ele direto da View v inflada
         appContext = AndruinoActivity.appContext;
+        recyclerView = view.findViewById(R.id.recycler_view);
+        noNotesView = view.findViewById(R.id.empty_notes_view);
+        db = new DatabaseHelper(appContext);
+        notesList.addAll(db.getAllNotes());
+
+
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNoteDialog(false, null, -1);
+            }
+        });
+
+
+//    mAdapter = new NotesAdapter(appContext, notesList);
+//    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(appContext);
+//    recyclerView.setLayoutManager(mLayoutManager);
+//    recyclerView.setHasFixedSize(true);
+        // recyclerView.setItemAnimator(new DefaultItemAnimator());
+        // recyclerView.addItemDecoration(new MyDividerItemDecoration(appContext, LinearLayoutManager.VERTICAL, 16));
+
+
+        mAdapter = new NotesAdapter(appContext, notesList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(appContext);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(appContext, LinearLayoutManager.VERTICAL, 16));
+        recyclerView.setAdapter(mAdapter);
+
+        toggleEmptyNotes();
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(appContext,
+                recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                showActionsDialog(position);
+            }
+        }));
+
         try {
             recyclerView = view.findViewById(R.id.recycler_view);
             Log.d(TAG, "pegou o recycle do layout");
@@ -97,54 +146,7 @@ String send_resp;
 @Override
 public void onViewCreated(View view, Bundle savedInstanceState){
 
-
-
-
-
-
-    recyclerView = view.findViewById(R.id.recycler_view);
-    noNotesView = view.findViewById(R.id.empty_notes_view);;
-
-    db = new DatabaseHelper(appContext);
-    notesList.addAll(db.getAllNotes());
-
-    FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            showNoteDialog(false, null, -1);
-        }
-    });
-
-
-    mAdapter = new NotesAdapter(appContext, notesList);
-    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(appContext);
-    recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.setHasFixedSize(true);
-   // recyclerView.setItemAnimator(new DefaultItemAnimator());
-   // recyclerView.addItemDecoration(new MyDividerItemDecoration(appContext, LinearLayoutManager.VERTICAL, 16));
-
-
-    recyclerView.setAdapter(mAdapter);
-
-    toggleEmptyNotes();
-
-    /**
-     * On long press on RecyclerView item, open alert dialog
-     * with options to choose
-     * Edit and Delete
-     * */
-    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(appContext,
-            recyclerView, new RecyclerTouchListener.ClickListener() {
-        @Override
-        public void onClick(View view, final int position) {
-        }
-
-        @Override
-        public void onLongClick(View view, int position) {
-            showActionsDialog(position);
-        }
-    }));
+//    mAdapter.notifyDataSetChanged();
 
         }
     @Override
@@ -159,7 +161,8 @@ public void onViewCreated(View view, Bundle savedInstanceState){
 
         // get the newly inserted note from db
         Note n = db.getNote(id);
-
+AndruinoActivity.mConnectedThread.write("database INSERT " + n + " " + timer + " " + isenabled);
+        Log.d("BluetoothBT","database INSERT " + n + " " + timer + " " + isenabled);
         if (n != null) {
             // adding new note to array list at 0 position
             notesList.add(0, n);
@@ -184,12 +187,14 @@ public void onViewCreated(View view, Bundle savedInstanceState){
         n.setTimer(timer);
         n.setType(type);
         // updating note in db
+
         db.updateNote(n);
 
         // refreshing the list
         notesList.set(position, n);
         mAdapter.notifyItemChanged(position);
-
+        AndruinoActivity.mConnectedThread.write("database UPDATE " + n.getId() + " "  +timer + " " + isenabled);
+        Log.d("BluetoothBT","database UPDATE " + n.getId() + " "  +timer + " " + isenabled);
         toggleEmptyNotes();
     }
 
@@ -199,6 +204,12 @@ public void onViewCreated(View view, Bundle savedInstanceState){
      */
     private void deleteNote(int position) {
         // deleting the note from db
+       AndruinoActivity.mConnectedThread.write("database DELETE " + position);
+
+if(AndruinoActivity.ConnectedMessage == "#DB:1"){
+Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
+}
+
         db.deleteNote(notesList.get(position));
 
         // removing the note from the list
@@ -206,6 +217,8 @@ public void onViewCreated(View view, Bundle savedInstanceState){
         mAdapter.notifyItemRemoved(position);
 
         toggleEmptyNotes();
+
+
     }
 
     /**
@@ -278,16 +291,70 @@ if(dias_semana != ""){
 
 
 }
+
+private void  read_weeks(String input){
+
+  String[] weeks =  input.split(":");
+
+    for(String day : weeks){
+
+switch(day){
+
+    case seg_v:
+        seg.setChecked(true);
+        break;
+
+    case ter_v:
+        ter.setChecked(true);
+        break;
+
+    case qua_v:
+        qua.setChecked(true);
+        break;
+
+    case qui_v:
+        qui.setChecked(true);
+        break;
+
+    case sex_v:
+        sex.setChecked(true);
+        break;
+
+    case sab_v:
+        sab.setChecked(true);
+        break;
+
+    case dom_v:
+        dom.setChecked(true);
+        break;
+
+
+
+    default:
+
+       return;
+}
+
+
+
+    }
+
+}
     private void showNoteDialog(final boolean shouldUpdate, final Note note, final int position) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(appContext);
         View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null);
+
+      //  android.view.View view = LayoutInflater.from(appContext)
+     //           .inflate(R.layout.note_dialog, null, false);
+
+
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(AndruinoActivity.appContext);
         alertDialogBuilderUserInput.setView(view);
 
         final EditText inputNote = view.findViewById(R.id.note);
-        final Switch inputIsEnabled = view.findViewById(R.id.isenabled);
-        final Button inputResponse = view.findViewById(R.id.syncronize);
+        final CheckBox inputIsEnabled = view.findViewById(R.id.isenabled);
+        //final Button inputResponse = view.findViewById(R.id.syncronize);
 
 
         final CheckBox checkbox_recorring = view.findViewById(R.id.check_alarm_recorring);
@@ -295,9 +362,8 @@ if(dias_semana != ""){
         final HorizontalScrollView menu_alarm_recorring = view.findViewById(R.id.menu_recorrente);
         final Button button_time_picker = view.findViewById(R.id.timer_picker);
 
-        final EditText inputTextTimer = view.findViewById(R.id.time_text);
+          inputTextTimer = view.findViewById(R.id.time_text);
         //   final Button inputTimer = view.findViewById(R.id.timer_picker);
-
 
 
 
@@ -318,23 +384,56 @@ if(dias_semana != ""){
         dialogTitle.setText(!shouldUpdate ? getString(R.string.lbl_new_note_title) : getString(R.string.lbl_edit_note_title));
 
         if (shouldUpdate && note != null) {
+            boolean type = (note.getType()  == 1);
+            boolean isenabled = (note.getisEnabled()  == 1);
+
+            //  mAdapter.notifyDataSetChanged();
             inputNote.setText(note.getNote());
 
             inputTextTimer.setText(note.getTimer());
+            checkbox_recorring.setChecked(type);
+
+     //       mAdapter.notifyDataSetChanged();
+
+            inputIsEnabled.setChecked(isenabled);
+
+            if (checkbox_recorring.isChecked()) {
 
 
+                menu_alarm_recorring.setVisibility(View.VISIBLE);
+
+            } else {
+                menu_alarm_recorring.setVisibility(View.GONE);
 
 
+            }
 
+
+           String[] timer_weekeds = note.getTimer().split(" ");
+            read_weeks(timer_weekeds[5]);
+Log.d("DEBBUGERTAG ", "TIMER WEEKDS : " + timer_weekeds[5]);
         }
 
 
 
 
 
+        checkbox_recorring.setOnClickListener(new View.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      if (checkbox_recorring.isChecked()) {
 
 
+                                                          menu_alarm_recorring.setVisibility(View.VISIBLE);
 
+                                                      } else {
+                                                          menu_alarm_recorring.setVisibility(View.GONE);
+
+
+                                                      }
+
+                                                  }
+                                              });
 
         button_time_picker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,9 +561,9 @@ if(dias_semana != ""){
 
      //   Log.d("DEBUGANDOXML","year: " + yearFinal + "\n" + "month: " + monthFinal + "\n" +"day: " + dayFinal +"\n" +"hour: " + hourFinal +"\n" + "minute: " + minuteFinal);
        // textedit.setText("year: " + yearFinal + "\n" + "month: " + monthFinal + "\n" +"day: " + dayFinal +"\n" +"hour: " + hourFinal +"\n" + "minute: " + minuteFinal);
-    //    menu_semana_alarm();
-     //   inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
-        inputTextTimer.setText("TGESTE");
+     menu_semana_alarm();
+      inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+//        inputTextTimer.setText("TGESTE");
     }
     private void toggleEmptyNotes() {
         // you can check notesList.size() > 0

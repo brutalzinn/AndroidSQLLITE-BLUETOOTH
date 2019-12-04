@@ -25,7 +25,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import info.androidhive.sqlite.R;
-import info.androidhive.sqlite.database.DatabaseHelper;
+import info.androidhive.sqlite.database.model.Note;
 import info.androidhive.sqlite.view.SectionsPageAdapter;
 import info.androidhive.sqlite.view.tabs.Tab1Fragment;
 import info.androidhive.sqlite.view.tabs.Tab2Fragment;
@@ -42,6 +42,7 @@ public class AndruinoActivity extends AppCompatActivity {
     private BluetoothSocket btSocket = null;
     private StringBuilder recDataString = new StringBuilder();
     public static ConnectedThread mConnectedThread;
+    public static String ConnectedMessage;
     private Vibrator vibrator;
     private Toolbar mToolbar, mToolbarBotton;
     private SeekBar seekBarR, seekBarG, seekBarB;
@@ -57,7 +58,7 @@ public class AndruinoActivity extends AppCompatActivity {
     public interface MyStringListener{
         public Integer computeSomething(String myString);
     }
-    private DatabaseHelper db;
+
     private static final String TAG = "MainActivity";
 
     private SectionsPageAdapter mSectionsPageAdapter;
@@ -86,6 +87,8 @@ public class AndruinoActivity extends AppCompatActivity {
       //  mToolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(mToolbar);
 
+
+
         mToolbarBotton = (Toolbar) findViewById(R.id.inc_tb_bottom);
 
         mToolbarBotton.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -96,9 +99,29 @@ public class AndruinoActivity extends AppCompatActivity {
                     case R.id.action_led:
 
                             vibrator.vibrate(vibClick);
-                            mConnectedThread.write("test" + "\r\n");
+                            mConnectedThread.write("readall" );
                             statusLampada = true;
                             Toast.makeText(AndruinoActivity.this, "Ligado!", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case R.id.action_led_demo:
+
+                        vibrator.vibrate(vibClick);
+                        mConnectedThread.write("database DELETEALL" );
+                        for (Note item:Tab1Fragment.db.getAllNotes())
+
+                            {
+
+                                Note n = item;
+
+                                mConnectedThread.write("database INSERT " + n.getId() + " " + n.getTimer() + " " + n.getisEnabled() );
+
+
+
+                        }
+
+                        statusLampada = true;
+                        Toast.makeText(AndruinoActivity.this, "Ligado!", Toast.LENGTH_SHORT).show();
 
                         break;
 
@@ -296,6 +319,7 @@ public class AndruinoActivity extends AppCompatActivity {
                     bytes = mmInStream.read(buffer); //read bytes from input buffer
                     String readMessage = new String(buffer, 0, bytes);
                     Log.d("BluetoothBT",readMessage);
+                    ConnectedMessage = readMessage;
                   //  Toast.makeText(AndruinoActivity.this, "Arduino respondeu:" + readMessage , Toast.LENGTH_SHORT).show();
                    // Toast.makeText(getBaseContext(), readMessage, Toast.LENGTH_LONG).show();
                     // Send the obtained bytes to the UI Activity via handler
@@ -308,6 +332,7 @@ public class AndruinoActivity extends AppCompatActivity {
 
 
         public void write(String input) {
+            input = input + "\r\n";
             // converts entered String into bytes
             byte[] msgBuffer = input.getBytes();
             try {

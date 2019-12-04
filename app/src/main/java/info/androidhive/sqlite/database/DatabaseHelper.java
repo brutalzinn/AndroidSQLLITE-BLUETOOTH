@@ -116,7 +116,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 note.setId(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)));
                 note.setNote(cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)));
                 note.setTimestamp(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
-
+                note.setisEnabled(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ISENABLED)));
+                note.setResponse(cursor.getString(cursor.getColumnIndex(Note.COLUMN_RESPONSE)));
+                note.setTimer(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMER)));
+                note.setType(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_TYPE)));
                 notes.add(note);
             } while (cursor.moveToNext());
         }

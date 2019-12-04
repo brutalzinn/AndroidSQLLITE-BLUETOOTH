@@ -9,8 +9,8 @@
     <string name="app_nome">Andruino Bluetooth</string>
 
     <string name="action_configuracoes">Configurações</string>
-    <string name="action_led">Led</string>
-    <string name="action_led_demo">Led demo</string>
+    <string name="action_led">Ler alarmes</string>
+    <string name="action_led_demo">SINCRONIZAR</string>
     <string name="action_sobre">Sobre</string>
     <string name="action_ajuda">Ajuda</string>
 

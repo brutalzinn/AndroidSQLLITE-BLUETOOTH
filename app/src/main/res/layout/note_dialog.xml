@@ -47,22 +47,17 @@
         android:textColorHint="@color/hint_enter_note"
         android:textSize="@dimen/input_new_note" />
 
+    <CheckBox
+        android:id="@+id/isenabled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ativar/Desativar" />
+
     <LinearLayout
         android:id="@+id/new_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/isenabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="false"
-            android:text="Ativar/Desativar"
-            android:textOff="Desativar"
-            android:textOn="Ativar" />
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <CheckBox
         android:id="@+id/check_alarm_recorring"
@@ -152,7 +147,7 @@
 
     <TextView
         android:id="@+id/time_text"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="teste"
         android:textColor="#000000"
@@ -176,5 +171,13 @@
             android:layout_height="match_parent"
             android:text="SELECIONAR HORÁRIO" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/response_arduino"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="resposta"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
 </LinearLayout>

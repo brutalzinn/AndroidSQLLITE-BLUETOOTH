@@ -74,6 +74,8 @@ public String getTimer() {
     public void setTimer(String timer) {
         this.timer = timer;
     }
+
+
     public int getType() {
         return type;
     }

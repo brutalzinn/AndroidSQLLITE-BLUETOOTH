@@ -7,10 +7,10 @@ package info.androidhive.sqlite.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -30,12 +30,27 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         public TextView note;
         public TextView dot;
         public TextView timestamp;
+public CheckBox isenabled;
+ public TextView response;
+ public TextView timer;
+        public CheckBox type;
 
         public MyViewHolder(View view) {
             super(view);
             note = view.findViewById(R.id.note);
             dot = view.findViewById(R.id.dot);
             timestamp = view.findViewById(R.id.timestamp);
+            isenabled = view.findViewById(R.id.isenabled);
+            response = view.findViewById(R.id.response_arduino);
+
+timer = view.findViewById(R.id.time_text);
+
+
+
+
+            type = view.findViewById(R.id.check_alarm_recorring);
+
+
         }
     }
 
@@ -58,6 +73,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         Note note = notesList.get(position);
 
         holder.note.setText(note.getNote());
+
+
+
+
 
         // Displaying dot from HTML character code
         holder.dot.setText(Html.fromHtml("&#8226;"));
