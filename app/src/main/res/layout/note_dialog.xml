@@ -63,6 +63,7 @@
         android:id="@+id/check_alarm_recorring"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Alarme recorrente" />
 
     <HorizontalScrollView
@@ -74,23 +75,25 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ToggleButton
                 android:id="@+id/seg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:text="@string/seg"
                 android:textOff="@string/seg"
                 android:textOn="@string/seg" />
 
             <ToggleButton
                 android:id="@+id/ter"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:checked="false"
                 android:text="@string/ter"
                 android:textOff="@string/ter"
@@ -98,45 +101,50 @@
 
             <ToggleButton
                 android:id="@+id/qua"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:text="@string/quar"
                 android:textOff="@string/quar"
                 android:textOn="@string/quar" />
 
             <ToggleButton
                 android:id="@+id/qui"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:text="@string/quin"
                 android:textOff="@string/quin"
                 android:textOn="@string/quin" />
 
             <ToggleButton
                 android:id="@+id/sex"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:text="@string/sex"
                 android:textOff="@string/sex"
                 android:textOn="@string/sex" />
 
             <ToggleButton
                 android:id="@+id/sab"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:text="@string/s_b"
                 android:textOff="@string/s_b"
                 android:textOn="@string/s_b" />
 
             <ToggleButton
                 android:id="@+id/dom"
-                android:layout_width="46dp"
-                android:layout_height="40dp"
-                android:layout_weight="100"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="30"
                 android:checked="false"
                 android:text="@string/dom"
                 android:textOff="@string/dom"
@@ -151,7 +159,8 @@
         android:layout_height="wrap_content"
         android:text="teste"
         android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="wrap_content"

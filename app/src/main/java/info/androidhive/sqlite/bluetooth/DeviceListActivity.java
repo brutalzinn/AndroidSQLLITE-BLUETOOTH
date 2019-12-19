@@ -194,11 +194,7 @@ public static String getAdress = "";
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_sobre) {
-            startActivity(new Intent(this, SobreActivity.class));
-        } else if (id == R.id.action_ajuda) {
-            startActivity(new Intent(this, AjudaActivity.class));
-        }
+
         return super.onOptionsItemSelected(item);
     }
     public static Context getAppContext() {

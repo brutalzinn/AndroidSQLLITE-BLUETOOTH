@@ -5,26 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_main"
-        android:elevation="4dp"
-        android:layout_height="?attr/actionBarSize"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_alignParentLeft="true"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/paired_devices"
-        android:paddingTop="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stackFromBottom="false" />
+        <TextView
+            android:id="@+id/response_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <include
-        android:id="@+id/inc_tb_bottom"
-        layout="@layout/toolbar_bottom" />
+        <Button
+            android:id="@+id/timer_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/configurar_hor_rio" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volume" />
+
+        <SeekBar
+            android:id="@+id/VolumeBar"
+            android:layout_width="match_parent"
+            android:layout_height="41dp" />
+
+        <Switch
+            android:id="@+id/lights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luzes" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/salvar" />
+    </LinearLayout>
 </RelativeLayout>

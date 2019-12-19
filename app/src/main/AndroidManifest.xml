@@ -37,9 +37,6 @@
         </activity>
 
         <!-- SobreActivity -->
-        <activity
-            android:name=".bluetooth.SobreActivity"
-            android:label="@string/title_activity_sobre" />
 
         <!-- AnduinoActivity -->
         <activity
@@ -47,9 +44,6 @@
             android:label="@string/title_activity_andruino" />
 
         <!-- AjudaActivity -->
-        <activity
-            android:name=".bluetooth.AjudaActivity"
-            android:label="@string/title_activity_ajuda"></activity>
     </application>
 
 </manifest>

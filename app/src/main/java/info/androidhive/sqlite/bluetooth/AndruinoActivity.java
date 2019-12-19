@@ -189,9 +189,9 @@ public class AndruinoActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1Fragment(), "TAB1");
-        adapter.addFragment(new Tab2Fragment(), "TAB2");
-        adapter.addFragment(new Tab3Fragment(), "TAB3");
+        adapter.addFragment(new Tab1Fragment(), "Alarmes");
+        adapter.addFragment(new Tab2Fragment(), "Configurações");
+        adapter.addFragment(new Tab3Fragment(), "---");
         viewPager.setAdapter(adapter);
     }
     /**

@@ -30,6 +30,9 @@
     <string name="dom">DOM</string>
     <string name="s_b">SÁB</string>
     <string name="sex">SEX</string>
-    <string name="quin">QUIN</string>
-    <string name="quar">QUAR</string>
+    <string name="quin">QUI</string>
+    <string name="quar">QUA</string>
+    <string name="textview">TextView</string>
+    <string name="configurar_hor_rio">CONFIGURAR HORÁRIO</string>
+    <string name="salvar">Salvar</string>
 </resources>
