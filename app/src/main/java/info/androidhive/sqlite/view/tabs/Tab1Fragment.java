@@ -79,7 +79,7 @@ public static String resposta_clock;
         //Se a RecyclerView estiver dentro do layout do fragment, pegue ele direto da View v inflada
         appContext = AndruinoActivity.appContext;
         recyclerView = view.findViewById(R.id.recycler_view);
-        noNotesView = view.findViewById(R.id.empty_notes_view);
+
         db = new DatabaseHelper(appContext);
         notesList.addAll(db.getAllNotes());
 
