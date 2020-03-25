@@ -12,7 +12,9 @@
     <ImageView
         android:id="@+id/iv_settings"
 
-        android:layout_width="24dp"
-        android:layout_height="24dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/informa_es"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
 </android.support.v7.widget.Toolbar>

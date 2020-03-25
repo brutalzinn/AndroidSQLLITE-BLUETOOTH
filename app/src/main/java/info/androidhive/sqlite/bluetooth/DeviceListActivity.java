@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -93,29 +92,23 @@ public static String getAdress = "";
         mToolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(mToolbar);
 
-        mToolbarBotton = (Toolbar) findViewById(R.id.inc_tb_bottom);
-        mToolbarBotton.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent it = null;
+//        mToolbarBotton = (Toolbar) findViewById(R.id.inc_tb_bottom);
+        Toolbar next = (Toolbar) findViewById(R.id.inc_tb_bottom);
+        next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), SplashInfoActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
 
-                switch (menuItem.getItemId()) {
-                    case R.id.action_facebook:
-                        it = new Intent(Intent.ACTION_VIEW);
-                        it.setData(Uri.parse("http://www.facebook.com"));
-                        break;
-                }
-                startActivity(it);
-                return true;
-            }
         });
-        mToolbarBotton.inflateMenu(R.menu.menu_bottom_device_list);
-        mToolbarBotton.findViewById(R.id.iv_settings).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(DeviceListActivity.this, "Configurações", Toast.LENGTH_SHORT).show();
-            }
-        });
+//
+//        mToolbarBotton.inflateMenu(R.menu.menu_bottom_device_list);
+//        mToolbarBotton.findViewById(R.id.iv_settings).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(DeviceListActivity.this, "Configurações", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -188,7 +181,8 @@ public static String getAdress = "";
     public boolean onOptionsItemSelected(MenuItem item) {
         /**
          * Handle action bar item clicks here.
-         * The action bar will automatically handle clicks on the Home/Up button,
+         * The action bar will automatically handle clicks o
+         * n the Home/Up button,
          * so long as you specify a parent activity in AndroidManifest.xml.
          */
         int id = item.getItemId();

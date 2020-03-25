@@ -82,7 +82,7 @@ public class AndruinoActivity extends AppCompatActivity {
 
 
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
-        mToolbar.setTitle("Andruíno Bluetooth");
+        mToolbar.setTitle("Relógio do papai");
         mToolbar.setSubtitle("Status Conectado!");
       //  mToolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(mToolbar);

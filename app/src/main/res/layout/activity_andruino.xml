@@ -15,7 +15,24 @@
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
     </android.support.v4.view.ViewPager>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_main"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -30,16 +47,6 @@
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_main"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_alignParentLeft="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <include
         android:id="@+id/inc_tb_bottom"

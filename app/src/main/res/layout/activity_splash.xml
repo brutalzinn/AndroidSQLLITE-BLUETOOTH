@@ -5,15 +5,6 @@
     tools:context="info.androidhive.sqlite.bluetooth.SplashActivity"
     android:background="@drawable/splash">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:background="@drawable/logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp" />
-
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,11 +13,26 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/titlulo_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Andruino Bluetooth"
-        android:id="@+id/titlulo_app"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="Relógio do papai"
         android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/progressBar"
+        android:layout_below="@+id/titlulo_app"
+        android:layout_alignParentStart="false"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="379dp"
+        android:layout_marginBottom="238dp"
+        android:allowUndo="false"
+        android:text="@string/version"
+        android:textAlignment="center"
+        android:textAllCaps="false" />
 </RelativeLayout>

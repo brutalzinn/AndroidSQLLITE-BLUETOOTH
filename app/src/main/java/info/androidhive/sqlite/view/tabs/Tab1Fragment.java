@@ -30,6 +30,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -48,8 +49,7 @@ import info.androidhive.sqlite.view.NotesAdapter;
  * Created by User on 2/28/2017.
  */
 
-public class Tab1Fragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
-{
+public class Tab1Fragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "Tab1Fragment";
 
     private Button btnTEST;
@@ -62,29 +62,26 @@ public class Tab1Fragment extends Fragment implements DatePickerDialog.OnDateSet
     private Context appContext = null;
     public static DatabaseHelper db;
     public static String EXTRA_DEVICE_ADDRESS = "device_addres";
-    int day , month, year, hour, minute;
+    int day, month, year, hour, minute;
     int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
     String dias_semana;
-String send_resp;
-    public static final String seg_v = "2", ter_v  ="3", qua_v  = "4", qui_v  = "5", sex_v  ="6", sab_v  = "7", dom_v  ="1";
+    String send_resp;
+    public static final String seg_v = "2", ter_v = "3", qua_v = "4", qui_v = "5", sex_v = "6", sab_v = "7", dom_v = "1";
     Dialog mDialog;
     TextView inputTextTimer;
-    ToggleButton seg , ter, qua, qui, sex, sab, dom;
-public static String resposta_clock;
+    ToggleButton seg, ter, qua, qui, sex, sab, dom;
+    public static String resposta_clock;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab1_fragment,container,false);
+        View view = inflater.inflate(R.layout.tab1_fragment, container, false);
         //Se a RecyclerView estiver dentro do layout do fragment, pegue ele direto da View v inflada
         appContext = AndruinoActivity.appContext;
         recyclerView = view.findViewById(R.id.recycler_view);
 
         db = new DatabaseHelper(appContext);
         notesList.addAll(db.getAllNotes());
-
-
-
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -111,7 +108,7 @@ public static String resposta_clock;
         recyclerView.addItemDecoration(new MyDividerItemDecoration(appContext, LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(mAdapter);
 
-     //   toggleEmptyNotes();
+        //   toggleEmptyNotes();
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(appContext,
                 recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -137,32 +134,31 @@ public static String resposta_clock;
     }
 
 
-
-
     /**
      * Inserting new note in db
      * and refreshing the list
      */
-@Override
-public void onViewCreated(View view, Bundle savedInstanceState){
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
 //    mAdapter.notifyDataSetChanged();
 
-        }
+    }
+
     @Override
-    public void onActivityCreated (@Nullable Bundle savedInstanceState){
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
 
     private void createNote(String note, int isenabled, String response, String timer, int type) {
         // inserting note in db and getting
         // newly inserted note id
-        long id = db.insertNote(note,isenabled,response,timer,type);
+        long id = db.insertNote(note, isenabled, response, timer, type);
 
         // get the newly inserted note from db
         Note n = db.getNote(id);
-AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + timer + " " + isenabled);
-        Log.d("BluetoothBT","database INSERT " + n + " " + timer + " " + isenabled);
+        AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + timer + " " + isenabled);
+        Log.d("BluetoothBT", "database INSERT " + n + " " + timer + " " + isenabled);
         if (n != null) {
             // adding new note to array list at 0 position
             notesList.add(0, n);
@@ -170,7 +166,7 @@ AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + t
             // refreshing the list
             mAdapter.notifyDataSetChanged();
 
-         //   toggleEmptyNotes();
+            //   toggleEmptyNotes();
         }
     }
 
@@ -178,7 +174,7 @@ AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + t
      * Updating note in db and updating
      * item in the list by its position
      */
-    private void updateNote(String note,int isenabled, String response,String timer,int type, int position) {
+    private void updateNote(String note, int isenabled, String response, String timer, int type, int position) {
         Note n = notesList.get(position);
         // updating note text
         n.setNote(note);
@@ -193,9 +189,9 @@ AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + t
         // refreshing the list
         notesList.set(position, n);
         mAdapter.notifyItemChanged(position);
-        AndruinoActivity.mConnectedThread.write("database UPDATE " + n.getId() + " "  +timer + " " + isenabled);
-     //   Log.d("BluetoothBT","database UPDATE " + n.getId() + " "  +timer + " " + isenabled);
-       // toggleEmptyNotes();
+        AndruinoActivity.mConnectedThread.write("database UPDATE " + n.getId() + " " + timer + " " + isenabled);
+        //   Log.d("BluetoothBT","database UPDATE " + n.getId() + " "  +timer + " " + isenabled);
+        // toggleEmptyNotes();
     }
 
     /**
@@ -204,11 +200,11 @@ AndruinoActivity.mConnectedThread.write("database INSERT " + n.getId() + " " + t
      */
     private void deleteNote(int position) {
         // deleting the note from db
-       AndruinoActivity.mConnectedThread.write("database DELETE " + position);
+        AndruinoActivity.mConnectedThread.write("database DELETE " + position);
 
-if(AndruinoActivity.ConnectedMessage == "#DB:1"){
-Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
-}
+        if (AndruinoActivity.ConnectedMessage == "#DB:1") {
+            Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
+        }
 
         db.deleteNote(notesList.get(position));
 
@@ -216,7 +212,7 @@ Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
         notesList.remove(position);
         mAdapter.notifyItemRemoved(position);
 
-     //   toggleEmptyNotes();
+        //   toggleEmptyNotes();
 
 
     }
@@ -231,7 +227,6 @@ Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
         CharSequence colors[] = new CharSequence[]{"Editar", "Deletar"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(appContext, R.style.MyAlertDialogStyle);
-
 
 
         builder.setTitle("Opções");
@@ -255,105 +250,160 @@ Log.d("BluetoothBT", "DELETADO DO Arduino. " + position);
      * when shouldUpdate=true, it automatically displays old note and changes the
      * button text to UPDATE
      */
-private void  menu_semana_alarm(){
+    private void menu_semana_alarm() {
 
 
-    dias_semana = "";
+        dias_semana = "";
 
-if(seg.isChecked()){
-  dias_semana = dias_semana + seg_v + ":";
+        if (seg.isChecked()) {
+            dias_semana = dias_semana + seg_v + ":";
 
-}
-    if(ter.isChecked()){
-        dias_semana = dias_semana + ter_v + ":";
+        }
+        if (ter.isChecked()) {
+            dias_semana = dias_semana + ter_v + ":";
 
-    }
-    if(qua.isChecked()){
-        dias_semana = dias_semana + qua_v + ":";
+        }
+        if (qua.isChecked()) {
+            dias_semana = dias_semana + qua_v + ":";
 
-    }
-    if(qui.isChecked()){
-        dias_semana = dias_semana + qui_v + ":";
+        }
+        if (qui.isChecked()) {
+            dias_semana = dias_semana + qui_v + ":";
 
-    }
-    if(sex.isChecked()){
-        dias_semana = dias_semana + sex_v + ":";
+        }
+        if (sex.isChecked()) {
+            dias_semana = dias_semana + sex_v + ":";
 
-    }
-    if(sab.isChecked()){
-        dias_semana = dias_semana + sab_v + ":";
+        }
+        if (sab.isChecked()) {
+            dias_semana = dias_semana + sab_v + ":";
 
-    }
-    if(dom.isChecked()){
-        dias_semana = dias_semana + dom_v + ":";
+        }
+        if (dom.isChecked()) {
+            dias_semana = dias_semana + dom_v + ":";
 
-    }
-if(dias_semana != ""){
+        }
+        if (dias_semana != "") {
 
-    dias_semana = dias_semana.substring(0, dias_semana.length()-1);
-}else{
-    dias_semana = "0:0:0:0:0:0:0";
+            dias_semana = dias_semana.substring(0, dias_semana.length() - 1);
+        } else {
+            dias_semana = "0:0:0:0:0:0:0";
 
-}
-
-
-}
-
-private void  read_weeks(String input){
-
-  String[] weeks =  input.split(":");
-
-    for(String day : weeks){
-
-switch(day){
-
-    case seg_v:
-        seg.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case ter_v:
-        ter.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case qua_v:
-        qua.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case qui_v:
-        qui.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case sex_v:
-        sex.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case sab_v:
-        sab.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-    case dom_v:
-        dom.setChecked(true);
-        menu_semana_alarm();
-        break;
-
-
-
-    default:
-
-       return;
-}
-
+        }
 
 
     }
 
-}
+    private void read_weeks(String input) {
+
+        String[] weeks = input.split(":");
+
+        for (String day : weeks) {
+
+            switch (day) {
+
+                case seg_v:
+                    seg.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case ter_v:
+                    ter.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case qua_v:
+                    qua.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case qui_v:
+                    qui.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case sex_v:
+                    sex.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case sab_v:
+                    sab.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+                case dom_v:
+                    dom.setChecked(true);
+                    menu_semana_alarm();
+                    break;
+
+
+                default:
+
+                    return;
+            }
+
+
+        }
+
+    }
+
+    private static String read_weeks_to_user(String input) {
+
+        String[] weeks = input.split(":");
+String days = "";
+        for (String day : weeks) {
+
+            switch (day) {
+
+                case seg_v:
+days = days  + "seg";
+
+
+break;
+                case ter_v:
+                    days = days  + ",ter";
+
+                    break;
+
+                case qua_v:
+                    days = days  + ",qua";
+                    break;
+
+                case qui_v:
+                    days = days  + ",quin";
+
+                    break;
+                case sex_v:
+                    days = days  + ",sex";
+
+                    break;
+
+                case sab_v:
+                    days = days  + ",sab";
+
+                    break;
+
+
+                case dom_v:
+                    days = days  + " e dom";
+
+
+                    break;
+
+
+                default:
+
+                    days += days;
+            }
+
+
+        }
+
+        return days;
+    }
+
+
 private void setalldaysoff(){
 
     seg.setChecked(false);
@@ -388,7 +438,7 @@ private void setalldaysoff(){
         final HorizontalScrollView menu_alarm_recorring = view.findViewById(R.id.menu_recorrente);
         final Button button_time_picker = view.findViewById(R.id.timer_picker);
 
-          inputTextTimer = view.findViewById(R.id.time_text);
+          inputTextTimer = view.findViewById(R.id.horadata);
         //   final Button inputTimer = view.findViewById(R.id.timer_picker);
 
 
@@ -412,7 +462,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -421,7 +471,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -430,7 +480,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -439,7 +489,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -448,7 +498,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -457,7 +507,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -466,7 +516,7 @@ private void setalldaysoff(){
             public void onClick(View v) {
 
                 menu_semana_alarm();
-                inputTextTimer.setText (dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana);
+                inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
                 resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
             }
         });
@@ -480,9 +530,13 @@ private void setalldaysoff(){
             boolean isenabled = (note.getisEnabled()  == 1);
 
             //  mAdapter.notifyDataSetChanged();
-            inputNote.setText(note.getNote());
 
-            inputTextTimer.setText(note.getTimer());
+           String[] data_to_format = note.getTimer().split(" ");
+
+
+            inputNote.setText(note.getNote());
+            Log.d("DEBBUGERTAG ", "note.getTimer" + note.getTimer());
+            inputTextTimer.setText(data_to_format[3] +":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
             resposta_clock = note.getTimer();
             checkbox_recorring.setChecked(type);
 
@@ -524,8 +578,18 @@ Log.d("DEBBUGERTAG ", "TIMER WEEKDS : " + timer_weekeds[5]);
                                                           monthFinal = 0;
                                                           yearFinal = 0;
                                                           resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
+if(hourFinal != 0 ){
 
-                                                          inputTextTimer.setText (resposta_clock);
+
+    inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
+
+
+
+}else{
+    String[] data_to_format = note.getTimer().split(" ");
+    inputTextTimer.setText ( data_to_format[3] +":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+
+}
 
                                                       } else {
                                                           menu_alarm_recorring.setVisibility(View.GONE);
@@ -533,8 +597,18 @@ Log.d("DEBBUGERTAG ", "TIMER WEEKDS : " + timer_weekeds[5]);
 
                                                           menu_semana_alarm();
                                                           resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
-                                                          inputTextTimer.setText (resposta_clock);
+                                                          if(hourFinal != 0 ){
 
+
+                                                              inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
+
+
+
+                                                          }else{
+                                                              String[] data_to_format = note.getTimer().split(" ");
+                                                              inputTextTimer.setText ( data_to_format[3] +":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+
+                                                          }
                                                       }
 
                                                   }
@@ -667,9 +741,9 @@ Log.d("DEBBUGERTAG ", "TIMER WEEKDS : " + timer_weekeds[5]);
      //   Log.d("DEBUGANDOXML","year: " + yearFinal + "\n" + "month: " + monthFinal + "\n" +"day: " + dayFinal +"\n" +"hour: " + hourFinal +"\n" + "minute: " + minuteFinal);
        // textedit.setText("year: " + yearFinal + "\n" + "month: " + monthFinal + "\n" +"day: " + dayFinal +"\n" +"hour: " + hourFinal +"\n" + "minute: " + minuteFinal);
      menu_semana_alarm();
-        resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
-
-        inputTextTimer.setText (resposta_clock);
+     resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
+String resposta_clock_user = hourFinal + ":" +  new DecimalFormat("00").format(minuteFinal) +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana);
+        inputTextTimer.setText (resposta_clock_user);
 //        inputTextTimer.setText("TGESTE");
     }
     private void toggleEmptyNotes() {

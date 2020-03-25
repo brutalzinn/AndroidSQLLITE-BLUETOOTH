@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Arduino Relógio</string>
-    <string name="action_settings">Settings</string>
-    <string name="activity_title_home">Notes</string>
+    <string name="app_name">Relógio do papai</string>
+    <string name="action_settings">Opções</string>
+    <string name="activity_title_home">Alarmes</string>
     <string name="msg_no_notes">No notes found!</string>
     <string name="lbl_new_note_title">New Note</string>
     <string name="lbl_edit_note_title">Edit Note</string>
     <string name="hint_enter_note">Enter your note!</string>
     <string name="app_nome">Andruino Bluetooth</string>
-
+    <string name="version">versão: Relógio do papai - 1.0.0.0 beta</string>
     <string name="action_configuracoes">Configurações</string>
     <string name="action_led">Ler alarmes</string>
     <string name="action_led_demo">SINCRONIZAR</string>
@@ -23,7 +23,7 @@
 
     <string name="action_facebook">Facebook</string>
 
-    <string name="url_by">http://www.rodriguesfas.com.br</string>
+    <string name="url_by">http://robertinho.net</string>
     <string name="url_app"></string>
     <string name="seg">SEG</string>
     <string name="ter">TER</string>
@@ -35,4 +35,7 @@
     <string name="textview">TextView</string>
     <string name="configurar_hor_rio">CONFIGURAR HORÁRIO</string>
     <string name="salvar">Salvar</string>
+    <string name="informa_es">Informações</string>
+    <string name="button">Button</string>
+    <string name="voltar">voltar</string>
 </resources>

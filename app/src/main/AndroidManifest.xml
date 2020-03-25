@@ -35,6 +35,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="info.androidhive.sqlite.bluetooth.SplashInfoActivity"
+            android:label="@string/app_nome">
+            <intent-filter>
+                <action android:name="info.androidhive.sqlite.bluetooth.SplashInfoActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
 
         <!-- SobreActivity -->
 
