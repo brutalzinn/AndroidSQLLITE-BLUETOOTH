@@ -437,7 +437,7 @@ private void setalldaysoff(){
 
         final HorizontalScrollView menu_alarm_recorring = view.findViewById(R.id.menu_recorrente);
         final Button button_time_picker = view.findViewById(R.id.timer_picker);
-
+        try {
           inputTextTimer = view.findViewById(R.id.horadata);
         //   final Button inputTimer = view.findViewById(R.id.timer_picker);
 
@@ -558,61 +558,75 @@ private void setalldaysoff(){
 
            String[] timer_weekeds = note.getTimer().split(" ");
             read_weeks(timer_weekeds[5]);
-Log.d("DEBBUGERTAG ", "TIMER WEEKDS : " + timer_weekeds[5]);
+
         }
 
 
 
 
 
-        checkbox_recorring.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      if (checkbox_recorring.isChecked()) {
+    checkbox_recorring.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (checkbox_recorring.isChecked()) {
 
 
-                                                          menu_alarm_recorring.setVisibility(View.VISIBLE);
+                menu_alarm_recorring.setVisibility(View.VISIBLE);
 
-                                                          menu_semana_alarm();
-                                                          dayFinal = 0;
-                                                          monthFinal = 0;
-                                                          yearFinal = 0;
-                                                          resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
-if(hourFinal != 0 ){
+                menu_semana_alarm();
+                dayFinal = 0;
+                monthFinal = 0;
+                yearFinal = 0;
+                resposta_clock = dayFinal + " " + monthFinal + " " + yearFinal + " " + hourFinal + " " + minuteFinal + " " + dias_semana;
 
-
-    inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
+                if (hourFinal != 0) {
 
 
+                    inputTextTimer.setText(hourFinal + ":" + minuteFinal + ", dia " + dayFinal + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
 
-}else{
-    String[] data_to_format = note.getTimer().split(" ");
-    inputTextTimer.setText ( data_to_format[3] +":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+
+                } else {
+
+                    if (shouldUpdate && note != null) {
+
+
+                        String[] data_to_format = note.getTimer().split(" ");
+                        inputTextTimer.setText(data_to_format[3] + ":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+                    }
+
+
+                }
+
+            } else {
+                menu_alarm_recorring.setVisibility(View.GONE);
+                setalldaysoff();
+
+                menu_semana_alarm();
+                resposta_clock = dayFinal + " " + monthFinal + " " + yearFinal + " " + hourFinal + " " + minuteFinal + " " + dias_semana;
+                if (hourFinal != 0) {
+
+
+                    inputTextTimer.setText(hourFinal + ":" + minuteFinal + ", dia " + dayFinal + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
+
+
+                } else  if (shouldUpdate && note != null) {
+                    String[] data_to_format = note.getTimer().split(" ");
+                    inputTextTimer.setText(data_to_format[3] + ":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+
+                }
+            }
+
+        }
+    });
 
 }
-
-                                                      } else {
-                                                          menu_alarm_recorring.setVisibility(View.GONE);
-                                                          setalldaysoff();
-
-                                                          menu_semana_alarm();
-                                                          resposta_clock = dayFinal  + " " + monthFinal + " " + yearFinal + " " +hourFinal +" " + minuteFinal + " " + dias_semana;
-                                                          if(hourFinal != 0 ){
+        catch (Exception e ){
 
 
-                                                              inputTextTimer.setText (hourFinal + ":" +  minuteFinal +  ", dia "  + dayFinal  + "/" + monthFinal + "/" + yearFinal + " + " + read_weeks_to_user(dias_semana));
+            Log.d("DEBUG ", "PROBLEMA DE NULL. IGNORE");
+        }
+finally {
 
-
-
-                                                          }else{
-                                                              String[] data_to_format = note.getTimer().split(" ");
-                                                              inputTextTimer.setText ( data_to_format[3] +":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
-
-                                                          }
-                                                      }
-
-                                                  }
-                                              });
 
         button_time_picker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -703,7 +717,7 @@ if(hourFinal != 0 ){
     }
 
 
-
+    }
 
 @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
