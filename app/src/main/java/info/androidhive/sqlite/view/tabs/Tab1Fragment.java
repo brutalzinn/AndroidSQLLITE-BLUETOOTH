@@ -348,7 +348,7 @@ public class Tab1Fragment extends Fragment implements DatePickerDialog.OnDateSet
 
     }
 
-    private static String read_weeks_to_user(String input) {
+    public static String read_weeks_to_user(String input) {
 
         String[] weeks = input.split(":");
 String days = "";

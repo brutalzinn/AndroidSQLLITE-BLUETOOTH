@@ -7,6 +7,7 @@ package info.androidhive.sqlite.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import info.androidhive.sqlite.R;
 import info.androidhive.sqlite.database.model.Note;
+import info.androidhive.sqlite.view.tabs.Tab1Fragment;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder> {
 
@@ -80,9 +82,25 @@ timer = view.findViewById(R.id.time_text);
 
         // Displaying dot from HTML character code
         holder.dot.setText(Html.fromHtml("&#8226;"));
-
+        String[] data_to_format = note.getTimer().split(" ");
         // Formatting and displaying timestamp
-        holder.timestamp.setText(formatDate(note.getTimestamp()));
+        Log.d("debug", note.getTimer());
+        Log.d("debug" , data_to_format[0]);
+        if(!data_to_format[0].equals("0")){
+
+            holder.timestamp.setText(data_to_format[3] + ":" + data_to_format[4] + ", dia " + data_to_format[0] + "/" + data_to_format[1] + "/" + data_to_format[2]);
+
+        }
+
+        else if (data_to_format[0].equals("0")){
+            Log.d("debug", "chegou aqui, berg" + Tab1Fragment.read_weeks_to_user(data_to_format[5]));
+
+    holder.timestamp.setText(data_to_format[3] + ":" + data_to_format[4] + ", dia " + Tab1Fragment.read_weeks_to_user(data_to_format[5]));
+
+
+
+
+        }
     }
 
     @Override
