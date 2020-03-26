@@ -29,7 +29,6 @@ import info.androidhive.sqlite.database.model.Note;
 import info.androidhive.sqlite.view.SectionsPageAdapter;
 import info.androidhive.sqlite.view.tabs.Tab1Fragment;
 import info.androidhive.sqlite.view.tabs.Tab2Fragment;
-import info.androidhive.sqlite.view.tabs.Tab3Fragment;
 
 
 public class AndruinoActivity extends AppCompatActivity {
@@ -193,7 +192,7 @@ public class AndruinoActivity extends AppCompatActivity {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new Tab1Fragment(), "Alarmes");
         adapter.addFragment(new Tab2Fragment(), "Configurações");
-        adapter.addFragment(new Tab3Fragment(), "---");
+       // adapter.addFragment(new Tab3Fragment(), "---");
         viewPager.setAdapter(adapter);
     }
     /**
