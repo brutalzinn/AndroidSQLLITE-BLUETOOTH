@@ -136,6 +136,8 @@ public class AndruinoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(AndruinoActivity.this, "Configuração precionado!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(v.getContext(), SplashInfoActivity.class);
+                startActivityForResult(myIntent, 0);
             }
         });
 
